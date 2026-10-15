@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Legal Desk</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef0f3;--panel:#fff;--ink:#1b2438;--mute:#5d6678;--line:#d9dde4;--nav:#1b2438;--navtxt:#c9d0de;--brass:#9a7421;--brassbg:#f3ead3;--bad:#a63d2f;--ok:#2f6b4f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161f;--panel:#1b2130;--ink:#e8ebf2;--mute:#9aa3b6;--line:#2d3547;--nav:#0c0f16;--navtxt:#aab3c6;--brass:#d3ac55;--brassbg:#3a3118;--bad:#e27a6b;--ok:#6fc29a}}
+:root[data-theme="dark"]{--bg:#12161f;--panel:#1b2130;--ink:#e8ebf2;--mute:#9aa3b6;--line:#2d3547;--nav:#0c0f16;--navtxt:#aab3c6;--brass:#d3ac55;--brassbg:#3a3118;--bad:#e27a6b;--ok:#6fc29a}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Public Sans",system-ui,sans-serif;display:flex;min-height:100vh}
+nav{width:220px;background:var(--nav);color:var(--navtxt);padding:20px 12px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+nav h1{font:600 20px/1.2 Newsreader,Georgia,serif;color:#fff;margin:0 8px 20px}
+nav h1 small{display:block;font:400 12px "Public Sans",sans-serif;color:var(--navtxt);margin-top:4px}
+nav button{display:flex;justify-content:space-between;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:left;padding:9px 10px;border-radius:6px;cursor:pointer}
+nav button:hover{background:rgba(255,255,255,.07)}nav button[aria-current=true]{background:var(--brass);color:#fff}
+nav .n{opacity:.7;font-size:12px}
+main{flex:1;min-width:0;padding:28px 32px;max-width:1100px}
+h2{font:600 28px/1.2 Newsreader,Georgia,serif;margin:0 0 4px}.sub{color:var(--mute);margin:0 0 20px}
+.bar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
+.bar input{max-width:280px}
+button.b{font:inherit;font-weight:500;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:6px;cursor:pointer}
+button.p{background:var(--brass);border-color:var(--brass);color:#fff}button.d{color:var(--bad)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:600;color:var(--mute);font-size:13px}tr:last-child td{border:0}
+td.act{text-align:right}td.act button{margin-left:4px;padding:4px 10px}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;background:var(--brassbg);color:var(--brass);font-size:12px;font-weight:600}
+.empty{padding:28px;text-align:center;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px}
+.stat b{display:block;font:600 30px/1.1 Newsreader,Georgia,serif}.stat span{color:var(--mute);font-size:13px}
+h3{font:600 18px Newsreader,Georgia,serif;margin:20px 0 8px}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);padding:22px;width:min(480px,94vw)}
+dialog::backdrop{background:rgba(10,14,24,.55)}
+label{display:block;font-weight:500;font-size:13px;margin:12px 0 4px}
+.chk{display:flex;flex-wrap:wrap;gap:6px 14px}.chk label{display:flex;gap:6px;align-items:center;font-weight:400;margin:0}.chk input{width:auto}
+.err{color:var(--bad);margin:10px 0 0;min-height:1em;font-size:13px}
+.foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+@media(max-width:760px){body{display:block}nav{width:100%;height:auto;position:static;display:flex;gap:4px;overflow-x:auto;padding:10px}nav h1{display:none}nav button{width:auto;white-space:nowrap;gap:8px}main{padding:18px 14px}}
+
+body{display:block}#app{display:flex;min-height:100vh}
+#login{min-height:100vh;display:none;place-items:center;padding:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px;width:min(400px,100%)}
+.card h1{font:600 28px/1.2 Newsreader,Georgia,serif;margin:0 0 4px}
+.demo{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.demo button{font:inherit;font-size:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:4px 10px;cursor:pointer}
+nav .me{margin:18px 8px 0;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);font-size:13px}
+nav .me b{display:block;color:#fff}nav .me button{margin-top:8px;border:1px solid rgba(255,255,255,.25);justify-content:center}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px 16px;margin:6px 0 4px}.kv span{display:block;color:var(--mute);font-size:12px}
+.rep{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.bar2{height:8px;background:var(--brass);border-radius:4px;min-width:2px}
+dialog.wide{width:min(760px,94vw)}
+@media(max-width:760px){#app{display:block}nav .me{margin:0 0 0 10px;padding:0;border:0;display:flex;gap:8px;align-items:center}nav .me b{display:none}}
+</style>
+</head>
+<body>
+<section id="login"><form class="card" id="lf"><h1>Legal Desk</h1><p class="sub">Sign in to manage cases and clients.</p>
+<label for="lu">Username</label><input id="lu" autocomplete="username" required>
+<label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" required>
+<p class="err" id="lerr" role="alert"></p><button class="b p" type="submit" style="width:100%">Sign in</button>
+<p class="sub" style="margin:16px 0 0;font-size:13px">Demo accounts (click to fill):</p>
+<div class="demo"><button type="button" onclick="demo('admin','admin123')">admin</button><button type="button" onclick="demo('clerk','clerk123')">clerk</button><button type="button" onclick="demo('meera','lawyer123')">lawyer: meera</button><button type="button" onclick="demo('rohan','lawyer123')">lawyer: rohan</button><button type="button" onclick="demo('anita','client123')">client: anita</button><button type="button" onclick="demo('vikram','client123')">client: vikram</button></div></form></section>
+<div id="app" style="display:none"><nav id="nav" aria-label="Sections"></nav><main id="main"></main></div>
+<dialog id="dlg"><form id="frm" method="dialog"></form></dialog>
+<script>
+const T={
+clients:{l:'Clients',pk:'client_id',f:[{k:'full_name',l:'Full name',req:1},{k:'phone',l:'Phone'},{k:'email',l:'Email'},{k:'address',l:'Address'}]},
+lawyers:{l:'Lawyers',pk:'lawyer_id',f:[{k:'full_name',l:'Full name',req:1},{k:'specialization',l:'Specialization'},{k:'bar_no',l:'Bar council no.',req:1},{k:'phone',l:'Phone'}]},
+courts:{l:'Courts',pk:'court_id',f:[{k:'name',l:'Court name',req:1},{k:'city',l:'City'},{k:'type',l:'Type',o:['District','High Court','Supreme Court','Tribunal']}]},
+cases:{l:'Cases',pk:'case_id',f:[{k:'title',l:'Case title',req:1},{k:'client_id',l:'Client',ref:'clients'},{k:'court_id',l:'Court',ref:'courts'},{k:'lawyers',l:'Lawyers',multi:1},{k:'case_type',l:'Case type',o:['Civil','Criminal','Family','Corporate','Property']},{k:'status',l:'Status',o:['Open','In hearing','Closed']},{k:'filed_on',l:'Filed on',t:'date',req:1}]},
+hearings:{l:'Hearings',pk:'hearing_id',f:[{k:'case_id',l:'Case',ref:'cases'},{k:'hearing_date',l:'Hearing date',t:'date',req:1},{k:'purpose',l:'Purpose'},{k:'outcome',l:'Outcome'}]},
+documents:{l:'Documents',pk:'document_id',f:[{k:'case_id',l:'Case',ref:'cases'},{k:'title',l:'Document title',req:1},{k:'doc_type',l:'Type',o:['Petition','Affidavit','Evidence','Order','Contract']},{k:'added_on',l:'Added on',t:'date',req:1}]},
+billing:{l:'Billing',pk:'bill_id',f:[{k:'case_id',l:'Case',ref:'cases'},{k:'description',l:'Description',req:1},{k:'amount',l:'Amount (INR)',t:'number',req:1},{k:'status',l:'Status',o:['Pending','Paid']}]},
+users:{l:'Users',pk:'user_id',f:[{k:'username',l:'Username',req:1},{k:'display_name',l:'Display name',req:1},{k:'password',l:'Password',t:'password',nolist:1},{k:'role',l:'Role',o:['admin','clerk','lawyer','client']},{k:'lawyer_id',l:'Linked lawyer',ref:'lawyers',opt:1},{k:'client_id',l:'Linked client',ref:'clients',opt:1}]}
+};
+const $=id=>document.getElementById(id);
+const today=new Date().toISOString().slice(0,10);
+let ME=null,D={},cur='dashboard',q='';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const inr=n=>'₹'+Number(n||0).toLocaleString('en-IN');
+const find=(t,id)=>(D[t]||[]).find(r=>r[T[t].pk]==id);
+const rec=r=>r.full_name||r.name||r.title||r.description;
+const lab=(t,id)=>{const r=find(t,id);return r?rec(r):'—'};
+const can=t=>ME.perms[t]=='rw';
+async function api(m,p,b){const r=await fetch('/api/'+p,{method:m,headers:{'Content-Type':'application/json'},body:b?JSON.stringify(b):undefined});const j=await r.json().catch(()=>({}));if(r.status==401&&p!='login'){ME=null;showLogin();throw new Error('Please sign in')}if(!r.ok)throw new Error(j.error||'Request failed');return j}
+function showLogin(){$('app').style.display='none';$('login').style.display='grid'}
+async function boot(){try{ME=await api('GET','me');await load()}catch(e){if(!ME)showLogin()}}
+async function load(){D={};try{for(const t in ME.perms)if(T[t])D[t]=await api('GET',t)}catch(e){if(!ME)return;$('main').innerHTML='<h2>Cannot reach the database</h2><p class="sub">Check that MySQL is running and the server is started. '+esc(e.message)+'</p>'}
+$('login').style.display='none';$('app').style.display='flex';render()}
+$('lf').onsubmit=async e=>{e.preventDefault();$('lerr').textContent='';try{ME=await api('POST','login',{username:$('lu').value,password:$('lp').value});cur='dashboard';$('lp').value='';await load()}catch(x){$('lerr').textContent=x.message}};
+function demo(u,p){$('lu').value=u;$('lp').value=p}
+async function logout(){await api('POST','logout').catch(()=>{});ME=null;showLogin()}
+function show(v){cur=v;q='';render()}
+function renderNav(){const items=[['dashboard','Dashboard']];Object.keys(T).filter(t=>t!='users'&&ME.perms[t]).forEach(t=>items.push([t,T[t].l]));if(ME.perms.reports)items.push(['reports','Reports']);if(ME.perms.users)items.push(['users','Users']);if(ME.perms.log)items.push(['log','Activity log']);
+$('nav').innerHTML='<h1>Legal Desk<small>Case and client management</small></h1>'+items.map(([k,l])=>`<button aria-current="${cur==k}" onclick="show('${k}')">${l}${D[k]?`<span class="n">${D[k].length}</span>`:''}</button>`).join('')+`<div class="me"><b>${esc(ME.user.display_name)}</b>Signed in as ${esc(ME.user.role)}<button onclick="logout()">Sign out</button></div>`}
+function render(){renderNav();window.scrollTo(0,0);({dashboard:dash,reports:reports,log:logv})[cur]?({dashboard:dash,reports:reports,log:logv})[cur]():list()}
+const txt=(f,r)=>{const v=r[f.k];if(f.ref)return v==null?'—':lab(f.ref,v);if(f.multi)return(v||[]).map(i=>lab('lawyers',i)).join(', ')||'—';if(f.k=='amount')return inr(v);return v??''};
+const cell=(f,r)=>f.k=='status'?`<span class="tag">${esc(r[f.k])}</span>`:esc(txt(f,r));
+function dash(){const open=D.cases.filter(c=>c.status!='Closed').length,due=D.billing.filter(b=>b.status=='Pending').reduce((s,b)=>s+Number(b.amount),0);
+const up=D.hearings.filter(h=>h.hearing_date>=today).sort((a,b)=>a.hearing_date.localeCompare(b.hearing_date));
+const scope={admin:'the whole firm',clerk:'the whole firm',lawyer:'your assigned cases',client:'your cases'}[ME.user.role];
+$('main').innerHTML=`<h2>Welcome, ${esc(ME.user.display_name)}</h2><p class="sub">Showing ${scope}.</p><div class="grid"><div class="stat"><b>${D.cases.length}</b><span>Cases</span></div><div class="stat"><b>${open}</b><span>Active cases</span></div><div class="stat"><b>${up.length}</b><span>Upcoming hearings</span></div><div class="stat"><b>${inr(due)}</b><span>Pending fees</span></div></div><h3>Upcoming hearings</h3><div class="wrap">${up.length?`<table><tr><th>Date</th><th>Case</th><th>Purpose</th></tr>${up.map(h=>`<tr><td>${esc(h.hearing_date)}</td><td>${esc(lab('cases',h.case_id))}</td><td>${esc(h.purpose)}</td></tr>`).join('')}</table>`:'<div class="empty">No hearings scheduled.</div>'}</div>`}
+function list(){const t=T[cur],cols=t.f.filter(f=>!f.nolist),rows=D[cur].filter(r=>JSON.stringify(r).toLowerCase().includes(q.toLowerCase())),w=can(cur);
+$('main').innerHTML=`<h2>${t.l}</h2><p class="sub">${D[cur].length} record(s)${w?'':' · view only'}</p><div class="bar"><input id="s" type="search" placeholder="Search ${t.l.toLowerCase()}" value="${esc(q)}" aria-label="Search">${w?`<button class="b p" onclick="edit()">Add ${t.l.replace(/s$/,'').toLowerCase()}</button>`:''}<button class="b" onclick="csv()">Export CSV</button></div><div class="wrap">${rows.length?`<table><tr>${cols.map(f=>`<th>${f.l}</th>`).join('')}<th></th></tr>${rows.map(r=>{const id=r[t.pk];return`<tr>${cols.map(f=>`<td>${cell(f,r)}</td>`).join('')}<td class="act">${cur=='cases'?`<button class="b" onclick="detail(${id})">View</button>`:''}${cur=='billing'&&w&&r.status=='Pending'?`<button class="b" onclick="paid(${id})">Mark paid</button>`:''}${w?`<button class="b" onclick="edit(${id})">Edit</button><button class="b d" onclick="del(${id})">Delete</button>`:''}</td></tr>`}).join('')}</table>`:`<div class="empty">${q?'No matches.':'Nothing here yet.'}</div>`}</div>`;
+$('s').oninput=e=>{q=e.target.value;const p=e.target.selectionStart;list();const n=$('s');n.focus();n.setSelectionRange(p,p)}}
+function csv(){const t=T[cur],cols=t.f.filter(f=>!f.nolist),q2=v=>'"'+String(v).replace(/"/g,'""')+'"';
+const s=[cols.map(f=>q2(f.l)).join(',')].concat(D[cur].map(r=>cols.map(f=>q2(txt(f,r))).join(','))).join('\n');
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/csv'}));a.download=cur+'.csv';a.click()}
+function detail(id){const c=find('cases',id),hs=D.hearings.filter(h=>h.case_id==id),ds=D.documents.filter(d=>d.case_id==id),bs=D.billing.filter(b=>b.case_id==id),tot=bs.reduce((s,b)=>s+Number(b.amount),0),pd=bs.filter(b=>b.status=='Paid').reduce((s,b)=>s+Number(b.amount),0);
+const tb=(h,rows)=>rows.length?`<div class="wrap"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</table></div>`:'<div class="empty">None yet.</div>';
+dlg.classList.add('wide');frm.innerHTML=`<h3 style="margin-top:0">${esc(c.title)} <span class="tag">${esc(c.status)}</span></h3><div class="kv"><div><span>Client</span>${esc(lab('clients',c.client_id))}</div><div><span>Court</span>${esc(lab('courts',c.court_id))}</div><div><span>Lawyers</span>${esc(c.lawyers.map(i=>lab('lawyers',i)).join(', ')||'—')}</div><div><span>Type · Filed</span>${esc(c.case_type)} · ${esc(c.filed_on)}</div></div><h3>Hearings</h3>${tb(['Date','Purpose','Outcome'],hs.sort((a,b)=>a.hearing_date.localeCompare(b.hearing_date)).map(h=>[h.hearing_date,h.purpose,h.outcome||'']))}<h3>Documents</h3>${tb(['Title','Type','Added'],ds.map(d=>[d.title,d.doc_type,d.added_on]))}<h3>Billing · ${inr(pd)} paid of ${inr(tot)}</h3>${tb(['Description','Amount','Status'],bs.map(b=>[b.description,inr(b.amount),b.status]))}<div class="foot"><button type="button" class="b" onclick="dlg.close()">Close</button></div>`;frm.onsubmit=null;dlg.showModal()}
+function edit(id){const t=T[cur],r=id?find(cur,id):{};dlg.classList.remove('wide');
+frm.innerHTML=`<h3 style="margin-top:0">${id?'Edit':'Add'} ${t.l.replace(/s$/,'').toLowerCase()}</h3>`+t.f.map(f=>{const v=r[f.k]??(f.t=='date'?today:'');let h;
+if(f.ref){const o=D[f.ref]||[],pk=T[f.ref].pk;h=`<select name="${f.k}">${f.opt?'<option value="">None</option>':''}${o.map(x=>`<option value="${x[pk]}" ${x[pk]==v?'selected':''}>${esc(rec(x))}</option>`).join('')}</select>`}
+else if(f.multi){h=`<div class="chk">${(D.lawyers||[]).map(x=>`<label><input type="checkbox" name="${f.k}" value="${x.lawyer_id}" ${(r[f.k]||[]).includes(x.lawyer_id)?'checked':''}>${esc(x.full_name)}</label>`).join('')||'No lawyers yet'}</div>`}
+else if(f.o){h=`<select name="${f.k}">${f.o.map(x=>`<option ${x==v?'selected':''}>${x}</option>`).join('')}</select>`}
+else if(f.t=='password')h=`<input name="${f.k}" type="password" autocomplete="new-password" ${id?'placeholder="Leave blank to keep the current password"':'required'}>`;
+else h=`<input name="${f.k}" type="${f.t||'text'}" value="${esc(v)}" ${f.req?'required':''} ${f.t=='number'?'min="0" step="0.01"':''}>`;
+return`<label>${f.l}</label>${h}`}).join('')+`<p class="err" id="err" role="alert"></p><div class="foot"><button type="button" class="b" onclick="dlg.close()">Cancel</button><button class="b p" type="submit">Save changes</button></div>`;
+frm.onsubmit=async e=>{e.preventDefault();const fd=new FormData(frm),o={};
+for(const f of t.f){if(f.multi)o[f.k]=fd.getAll(f.k).map(Number);else if(f.ref){const v=fd.get(f.k);if(!v&&!f.opt){$('err').textContent='Choose a '+f.l.toLowerCase()+'. Add one in its section first.';return}o[f.k]=v?Number(v):null}else o[f.k]=fd.get(f.k)}
+try{await api(id?'PUT':'POST',cur+(id?'/'+id:''),o);dlg.close();await load()}catch(x){$('err').textContent=x.message}};
+dlg.showModal()}
+async function del(id){if(!confirm('Delete this record?'))return;try{await api('DELETE',cur+'/'+id);await load()}catch(x){alert(x.message)}}
+async function paid(id){const r=find('billing',id);try{await api('PUT','billing/'+id,{...r,status:'Paid'});await load()}catch(x){alert(x.message)}}
+async function reports(){const R=await api('GET','reports');const mx=Math.max(1,...R.pending.map(x=>x.amount));
+const tb=(h,rows)=>`<div class="wrap"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')||'<tr><td>No data</td></tr>'}</table></div>`;
+$('main').innerHTML=`<h2>Reports</h2><p class="sub">Calculated by the database from live records.</p><div class="rep"><div><h3>Pending fees by client</h3>${tb(['Client','Amount',''],R.pending.map(x=>[esc(x.full_name),inr(x.amount),`<div class="bar2" style="width:${Math.round(x.amount/mx*100)}px"></div>`]))}</div><div><h3>Cases per lawyer</h3>${tb(['Lawyer','Cases'],R.workload.map(x=>[esc(x.full_name),x.total]))}</div><div><h3>Cases by status</h3>${tb(['Status','Cases'],R.status.map(x=>[esc(x.status),x.total]))}</div><div><h3>Billing by status</h3>${tb(['Status','Amount'],R.billing.map(x=>[esc(x.status),inr(x.total)]))}</div></div>`}
+async function logv(){const L=await api('GET','log');$('main').innerHTML=`<h2>Activity log</h2><p class="sub">Latest 200 actions, stored in the activity_log table.</p><div class="wrap">${L.length?`<table><tr><th>Time</th><th>User</th><th>Action</th><th>Table</th><th>Record</th><th>Details</th></tr>${L.map(x=>`<tr><td>${esc(x.created_at)}</td><td>${esc(x.username)}</td><td>${esc(x.action)}</td><td>${esc(x.table_name)}</td><td>${esc(x.record_id)}</td><td>${esc(x.details)}</td></tr>`).join('')}</table>`:'<div class="empty">No activity yet.</div>'}</div>`}
+boot();
+</script>
+</body>
+</html>
